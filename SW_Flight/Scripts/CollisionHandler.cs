@@ -7,14 +7,21 @@ public class CollisionHandler : MonoBehaviour
 {
     [SerializeField] float InvokeTime = 1f;
     [SerializeField] ParticleSystem crashVFX;
+
+    PlayerController DeLaser;
+
     void OnTriggerEnter(Collider other){
         StartCrashSequence();
     }
     void StartCrashSequence(){
+        DeLaser = FindObjectOfType<PlayerController>();
         crashVFX.Play();
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<PlayerController>().enabled = false;
         Invoke("ReloadLevel", InvokeTime);
+        DeLaser.SetLasersActive(false);
+
+
     }
     void ReloadLevel(){
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;

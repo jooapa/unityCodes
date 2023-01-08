@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 	float xThrow;
 	float yThrow;
 	
+
     void Update()
     {
 		ProcessTranslation();
@@ -63,16 +64,15 @@ public class PlayerController : MonoBehaviour
 	}
 
 	void Processfiring(){
-
+		
 		if(Input.GetButton("Fire1")){
-			SetLasersActive(true);
+		SetLasersActive(true);
 		}
 		else{
 			SetLasersActive(false);
 		}
-
 	}
-	void SetLasersActive(bool isActive){
+	 public void SetLasersActive(bool isActive){
 		foreach (GameObject laser in lasers){
 			var emissionModule = laser.GetComponent<ParticleSystem>().emission;
 			emissionModule.enabled = isActive;
