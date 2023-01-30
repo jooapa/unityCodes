@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 12f;
     public float gravity = -9.81f;
     public float jumpHeight = 4f;
+    public Rigidbody Bullet;
+    public Transform BarrelEnd;
+
 
     public Transform GroundCheck; //reference to the object groundcheck object
     public float GroundDistance = 0.4f;
@@ -38,5 +42,15 @@ public class PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+        Firing();
+    }
+
+    void Firing()
+    {
+        if(Input.GetButtonDown("Fire1")){
+            Rigidbody BulletInstance;
+            BulletInstance = Instantiate(Bullet, BarrelEnd.position, BarrelEnd.rotation);
+            BulletInstance.AddForce(BarrelEnd.forward * 500f);
+        }
     }
 }
