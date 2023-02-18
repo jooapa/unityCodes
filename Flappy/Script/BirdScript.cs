@@ -15,18 +15,32 @@ public class BirdScript : MonoBehaviour
     public Manager Manager;
     public bool isBirdAlive = true;
 
-    
+    //sprite changer variables 
+    public Sprite[] sprites;
+    public float changeInterval = 1f;
+    private SpriteRenderer spriteRenderer;
+    private int currentSpriteIndex = 0;
+    private float timer = 0f;    
+
+
     private PlayerInput playerInput;
     private InputAction tapScreenAction;
     
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (sprites.Length > 0)
+        {
+            spriteRenderer.sprite = sprites[currentSpriteIndex];
+        }
+
         Manager = GameObject.FindGameObjectWithTag("manager").GetComponent<Manager>();
     }
 
     void Update()
     {
-        
+
+        switchSprites();
         birdRotation();
         
 
@@ -67,6 +81,16 @@ public class BirdScript : MonoBehaviour
         Manager.gameOver();
         cCollider.enabled = false;
         isBirdAlive = false;
+    }
+
+    void switchSprites(){
+        timer += Time.deltaTime;
+        if (timer >= changeInterval)
+        {
+            currentSpriteIndex = (currentSpriteIndex + 1) % sprites.Length;
+            spriteRenderer.sprite = sprites[currentSpriteIndex];
+            timer = 0f;
+        }
     }
 }
 
